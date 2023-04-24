@@ -10,5 +10,15 @@ namespace JhooneByUju2._0.Data
         }
         public DbSet<Category> Categories { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Category>().HasData(
+                new Category { Id = 1, Name = "Hand Bags", DisplayOrder = 0 },
+                new Category { Id = 2, Name = "Purses", DisplayOrder = 0 },
+                new Category { Id = 3, Name = "Belts", DisplayOrder = 0 },
+                new Category { Id = 4, Name = "Arts", DisplayOrder = 0 }
+                );
+        }
+
     }
 }

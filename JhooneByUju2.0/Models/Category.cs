@@ -10,7 +10,7 @@ namespace JhooneByUju2._0.Models
         public string Name { get; set; }
 
         [Display(Name = "Display Order")]
-        public string DisplayOrder { get; set; }
+        public int DisplayOrder { get; set; }
 
     }
 }
