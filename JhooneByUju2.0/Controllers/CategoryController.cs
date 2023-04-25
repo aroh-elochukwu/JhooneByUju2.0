@@ -17,5 +17,10 @@ namespace JhooneByUju2._0.Controllers
 
             return View(categoriesList);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
