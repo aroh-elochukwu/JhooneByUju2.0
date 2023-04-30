@@ -76,5 +76,39 @@ namespace JhooneByUju2._0.Controllers
 
 
         }
+
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            if (id == 0 || id == null)
+            {
+                return NotFound();
+            }
+
+            Category? queriedCategory = _db.Categories.Find(id);
+
+            if (queriedCategory == null)
+            {
+                return NotFound();
+
+            }
+            return View(queriedCategory);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeletePost(int? id)
+        {
+            Category? category = _db.Categories.Find(id);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            _db.Categories.Remove(category);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+
+        }
     }
 }
