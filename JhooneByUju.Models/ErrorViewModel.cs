@@ -1,4 +1,4 @@
-namespace JhooneByUju2._0.Models
+namespace JhooneByUju.Models
 {
     public class ErrorViewModel
     {

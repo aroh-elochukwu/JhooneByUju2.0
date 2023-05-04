@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33617.297
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JhooneByUju2.0", "JhooneByUju2.0\JhooneByUju2.0.csproj", "{78A40375-300D-4AEF-9AD1-3D26E5B77873}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JhooneByUju", "JhooneByUju2.0\JhooneByUju.csproj", "{78A40375-300D-4AEF-9AD1-3D26E5B77873}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JhooneByUju.DataAccess", "JhooneByUju.DataAccess\JhooneByUju.DataAccess.csproj", "{AF4E2E9E-E2CD-45D1-ABC5-03FDB1DD8686}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JhooneByUju.DataAccess", "JhooneByUju.DataAccess\JhooneByUju.DataAccess.csproj", "{AF4E2E9E-E2CD-45D1-ABC5-03FDB1DD8686}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JhooneByUju.Models", "JhooneByUju.Models\JhooneByUju.Models.csproj", "{CE33BCCB-5CB6-4ABE-AAF0-4B2115E3091F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JhooneByUju.Models", "JhooneByUju.Models\JhooneByUju.Models.csproj", "{CE33BCCB-5CB6-4ABE-AAF0-4B2115E3091F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JhooneByUju.Utility", "JhooneByUju.Utility\JhooneByUju.Utility.csproj", "{E609511D-2F12-4C38-8085-7AFB2DC5BCB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JhooneByUju.Utility", "JhooneByUju.Utility\JhooneByUju.Utility.csproj", "{E609511D-2F12-4C38-8085-7AFB2DC5BCB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

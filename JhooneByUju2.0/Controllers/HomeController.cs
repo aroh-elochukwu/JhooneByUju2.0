@@ -1,4 +1,4 @@
-﻿using JhooneByUju2._0.Models;
+﻿using JhooneByUju.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace JhooneByUju2._0.Migrations
+namespace JhooneByUju.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class addCategoryTableToDatabase : Migration

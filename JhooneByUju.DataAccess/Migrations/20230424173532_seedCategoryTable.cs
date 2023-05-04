@@ -4,7 +4,7 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace JhooneByUju2._0.Migrations
+namespace JhooneByUju.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class seedCategoryTable : Migration

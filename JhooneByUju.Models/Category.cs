@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace JhooneByUju2._0.Models
+namespace JhooneByUju.Models
 {
     public class Category
     {
