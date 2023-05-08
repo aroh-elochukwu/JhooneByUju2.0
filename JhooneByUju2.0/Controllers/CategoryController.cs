@@ -7,14 +7,14 @@ namespace JhooneByUju2._0.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepository _categoryRepo;
-        public CategoryController(ICategoryRepository db)
+        private readonly IUnitOfWork _unitOfWork;
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _categoryRepo = db;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
-            List <Category> categoriesList = _categoryRepo.GetAll().ToList();
+            List <Category> categoriesList = _unitOfWork.Category.GetAll().ToList();
 
             return View(categoriesList);
         }
@@ -35,8 +35,8 @@ namespace JhooneByUju2._0.Controllers
 
             if (ModelState.IsValid)
             {
-                _categoryRepo.Add(category);
-                _categoryRepo.Save();
+                _unitOfWork.Category.Add(category);
+                _unitOfWork.Save();
                 TempData["success"] = "Category created";
                 return RedirectToAction("Index");
             } 
@@ -54,7 +54,7 @@ namespace JhooneByUju2._0.Controllers
                 return NotFound();
             }
 
-            Category? queriedCategory = _categoryRepo.Get(u => u.Id == id);
+            Category? queriedCategory = _unitOfWork.Category.Get(u => u.Id == id);
 
             if (queriedCategory == null)
             {
@@ -69,8 +69,8 @@ namespace JhooneByUju2._0.Controllers
         {            
             if (ModelState.IsValid)
             {
-                _categoryRepo.Update(category);
-                _categoryRepo.Save();
+                _unitOfWork.Category.Update(category);
+                _unitOfWork.Save();
                 TempData["success"] = "Category updated";
                 return RedirectToAction("Index");
             }
@@ -88,7 +88,7 @@ namespace JhooneByUju2._0.Controllers
                 return NotFound();
             }
 
-            Category? queriedCategory = _categoryRepo.Get(u => u.Id == id);
+            Category? queriedCategory = _unitOfWork.Category.Get(u => u.Id == id);
 
             if (queriedCategory == null)
             {
@@ -101,15 +101,15 @@ namespace JhooneByUju2._0.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePost(int? id)
         {
-            Category? category = _categoryRepo.Get(u => u.Id == id);
+            Category? category = _unitOfWork.Category.Get(u => u.Id == id);
 
             if (category == null)
             {
                 return NotFound();
             }
 
-            _categoryRepo.Remove(category);
-            _categoryRepo.Save();
+            _unitOfWork.Category.Remove(category);
+            _unitOfWork.Save();
             TempData["success"] = "Category deleted";
             return RedirectToAction("Index");
 
