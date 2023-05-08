@@ -10,6 +10,7 @@ namespace JhooneByUju.DataAccess.Data
         }
         public DbSet<Category> Categories { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData(
