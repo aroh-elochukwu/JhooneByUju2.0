@@ -3,8 +3,9 @@ using JhooneByUju.DataAccess.Repository.IRepository;
 using JhooneByUju.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace JhooneByUju2._0.Controllers
+namespace JhooneByUju2._0.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -14,7 +15,7 @@ namespace JhooneByUju2._0.Controllers
         }
         public IActionResult Index()
         {
-            List <Category> categoriesList = _unitOfWork.Category.GetAll().ToList();
+            List<Category> categoriesList = _unitOfWork.Category.GetAll().ToList();
 
             return View(categoriesList);
         }
@@ -39,11 +40,11 @@ namespace JhooneByUju2._0.Controllers
                 _unitOfWork.Save();
                 TempData["success"] = "Category created";
                 return RedirectToAction("Index");
-            } 
-            
+            }
+
             return View();
 
-            
+
         }
 
         [HttpGet]
@@ -66,7 +67,7 @@ namespace JhooneByUju2._0.Controllers
 
         [HttpPost]
         public IActionResult Edit(Category category)
-        {            
+        {
             if (ModelState.IsValid)
             {
                 _unitOfWork.Category.Update(category);

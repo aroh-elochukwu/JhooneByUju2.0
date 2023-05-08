@@ -21,4 +21,8 @@
     <ProjectReference Include="..\JhooneByUju.DataAccess\JhooneByUju.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
