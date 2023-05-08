@@ -9,6 +9,7 @@ namespace JhooneByUju.DataAccess.Data
         {                
         }
         public DbSet<Category> Categories { get; set; }
+        public DbSet <Product> Products { get; set; }   
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -19,7 +20,16 @@ namespace JhooneByUju.DataAccess.Data
                 new Category { Id = 3, Name = "Belts", DisplayOrder = 0 },
                 new Category { Id = 4, Name = "Arts", DisplayOrder = 0 }
                 );
+
+            modelBuilder.Entity<Product>().HasData(
+                new Product { Id = 1, Title = "Hand Bags 2", StoreCode = 102, Designer = "Obianuju Igboayaka",Description= "Second Hand bag created by Igboayaka Uju", ListPrice= 14, Price = 13.2, Price15 = 11 },
+                new Product { Id = 2, Title = "Hand Bag  1", StoreCode = 101, Designer = "Obianuju Igboayaka", Description = "First Hand bag created by Igboayaka Uju", ListPrice = 35, Price = 32, Price15 = 27 },
+                new Product { Id = 3, Title = "Belts 1", StoreCode = 201, Designer = "Obianuju Igboayaka", Description = "First around the waist belt created by Igboayaka Uju", ListPrice = 27, Price = 25, Price15 = 22 },
+                new Product { Id = 4, Title = "Arts 1", StoreCode = 301 , Designer = "Obianuju Igboayaka", Description = "First Art painting created by Igboayaka Uju", ListPrice = 200, Price = 187, Price15 = 160 }
+                );
         }
+
+        
 
     }
 }
