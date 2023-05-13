@@ -1,6 +1,8 @@
 ﻿using JhooneByUju.DataAccess.Repository.IRepository;
 using JhooneByUju.Models;
+using JhooneByUju.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace JhooneByUju2._0.Areas.Admin.Controllers
 {
@@ -15,29 +17,50 @@ namespace JhooneByUju2._0.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            List<Product> products = _unitOfWork.Product.GetAll().ToList();
+            List<Product> products = _unitOfWork.Product.GetAll().ToList();            
             return View(products);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            
+            ProductVM productVM = new()
+            {
+                CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+
+                }),
+                Product = new Product()
+
+            };
+            return View(productVM);
         }
 
         [HttpPost]
-        public IActionResult Create(Product product)
+        public IActionResult Create(ProductVM productVM)
         {
 
             if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Add(product);
+                _unitOfWork.Product.Add(productVM.Product);
                 _unitOfWork.Save();
                 TempData["success"] = "Product created";
                 return RedirectToAction("Index");
             }
+            else
+            {
+                productVM.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
 
-            return View();
+                });               
+
+                return View(productVM);
+            }            
 
         }
 
