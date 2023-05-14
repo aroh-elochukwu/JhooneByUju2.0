@@ -19,6 +19,7 @@ namespace JhooneByUju.Models
         [DisplayName("Product Name")]
         public string Title { get; set; }
         public string Description { get; set; }
+        [DisplayName("Store Code")]
         public int StoreCode { get; set; }
         public string Designer { get; set; }
         [Required ]
