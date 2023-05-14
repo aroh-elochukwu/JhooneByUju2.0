@@ -52,7 +52,7 @@
                         <td> @product.Designer</td>
                         <td> @product.ListPrice</td>
                         <td> @product.StoreCode</td>
-                        <td> </td>
+                        <td> @product.Category.Name</td>
                         <td>
                             <div class="w-75 btn-group" role="group">
                                 <a asp-controller="Product" asp-action="Upsert" asp-route-id="@product.Id" class="btn btn-primary mx-2">
