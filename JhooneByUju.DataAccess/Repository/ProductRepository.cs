@@ -20,7 +20,23 @@ namespace JhooneByUju.DataAccess.Repository
 
         public void Update (Product product)
         {
-            _db.Products.Update(product);
+            Product queriedProduct = _db.Products.FirstOrDefault(x => x.Id == product.Id);
+            if (queriedProduct != null )
+            {
+                queriedProduct.Title = product.Title;
+                queriedProduct.Description = product.Description;
+                queriedProduct.Designer = product.Designer;
+                queriedProduct.StoreCode = product.StoreCode;
+                queriedProduct.CategoryId = product.CategoryId;
+                queriedProduct.Price = product.Price;
+                queriedProduct.ListPrice = product.ListPrice;
+                queriedProduct.Price15 = product.Price15;
+                if (product.ImageUrl != null )
+                {
+                    queriedProduct.ImageUrl = product.ImageUrl;
+
+                }
+            }            
         }
     }
 }
