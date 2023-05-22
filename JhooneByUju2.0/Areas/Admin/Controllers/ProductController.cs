@@ -108,41 +108,6 @@ namespace JhooneByUju2._0.Areas.Admin.Controllers
 
         }       
 
-        [HttpGet]
-        public IActionResult Delete(int? id)
-        {
-            if (id == 0 || id == null)
-            {
-                return NotFound();
-            }
-
-            Product? queriedProduct = _unitOfWork.Product.Get(u => u.Id == id);
-
-            if (queriedProduct == null)
-            {
-                return NotFound();
-
-            }
-            return View(queriedProduct);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePost(int? id)
-        {
-            Product? product = _unitOfWork.Product.Get(u => u.Id == id);
-
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            _unitOfWork.Product.Remove(product);
-            _unitOfWork.Save();
-            TempData["success"] = "Product deleted";
-            return RedirectToAction("Index");
-
-        }
-
         #region API CALLS
 
         [HttpGet]
@@ -150,6 +115,28 @@ namespace JhooneByUju2._0.Areas.Admin.Controllers
         {
             List<Product> products = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
             return Json(new {data = products});
+        }
+
+        
+        public IActionResult Delete(int id)
+        {
+            Product productTobeDeleted = _unitOfWork.Product.Get(u =>u.Id == id);   
+            if (productTobeDeleted == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, productTobeDeleted.ImageUrl.TrimStart('\\'));
+
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            _unitOfWork.Product.Remove(productTobeDeleted);
+            _unitOfWork.Save();
+
+            return Json(new { success = true, message = "Delete Successful"});
         }
 
         #endregion
