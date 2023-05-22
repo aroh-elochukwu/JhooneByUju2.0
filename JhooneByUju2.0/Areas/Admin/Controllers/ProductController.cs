@@ -106,9 +106,7 @@ namespace JhooneByUju2._0.Areas.Admin.Controllers
                 return View(productVM);
             }            
 
-        }
-
-       
+        }       
 
         [HttpGet]
         public IActionResult Delete(int? id)
@@ -144,5 +142,18 @@ namespace JhooneByUju2._0.Areas.Admin.Controllers
             return RedirectToAction("Index");
 
         }
+
+        #region API CALLS
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<Product> products = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
+            return Json(new {data = products});
+        }
+
+        #endregion
+
+
     }
 }
