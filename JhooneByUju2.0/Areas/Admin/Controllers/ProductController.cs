@@ -117,7 +117,7 @@ namespace JhooneByUju2._0.Areas.Admin.Controllers
             return Json(new {data = products});
         }
 
-        
+        [HttpDelete]
         public IActionResult Delete(int id)
         {
             Product productTobeDeleted = _unitOfWork.Product.Get(u =>u.Id == id);   
