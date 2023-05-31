@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\JhooneByUju.DataAccess\JhooneByUju.DataAccess.csproj" />
+    <ProjectReference Include="..\JhooneByUju.Utility\JhooneByUju.Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>
