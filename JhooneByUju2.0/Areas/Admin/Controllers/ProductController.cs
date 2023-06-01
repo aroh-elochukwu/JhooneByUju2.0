@@ -1,13 +1,17 @@
 ﻿using JhooneByUju.DataAccess.Repository.IRepository;
 using JhooneByUju.Models;
 using JhooneByUju.Models.ViewModels;
+using JhooneByUju.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data;
 using System.Timers;
 
 namespace JhooneByUju2._0.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
