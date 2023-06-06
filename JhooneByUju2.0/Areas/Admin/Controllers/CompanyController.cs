@@ -1,9 +1,10 @@
-﻿using JhooneByUju.DataAccess.Repository.IRepository;
+﻿using JhooneByUju.DataAccess.Data;
+using JhooneByUju.DataAccess.Repository.IRepository;
 using JhooneByUju.Models;
 using JhooneByUju.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
+
 
 namespace JhooneByUju2._0.Areas.Admin.Controllers
 {
