@@ -3,6 +3,7 @@ using JhooneByUju.Models;
 using JhooneByUju.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace JhooneByUju2._0.Areas.Admin.Controllers
 {
@@ -40,6 +41,74 @@ namespace JhooneByUju2._0.Areas.Admin.Controllers
             }
             
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int? id)
+        {
+            if (id == 0 || id == null  )
+            {
+                return NotFound();                
+            }
+
+            Company? queriedCompany = _unitOfWork.Company.Get(u  => u.Id == id);
+
+            if (queriedCompany == null)
+            {
+                return NotFound();
+            }
+
+            return View(queriedCompany);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Company company)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Company.Update(company); 
+                _unitOfWork.Save();
+                TempData["success"] = "Company info Updated";
+                return RedirectToAction("Index");
+            }
+           
+
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            if (id == 0 || id == null)
+            {
+                return NotFound();
+            }
+
+            Company? queriedCompany = _unitOfWork.Company.Get(u => u.Id == id);
+
+            if (queriedCompany == null)
+            {
+                return NotFound();
+
+            }
+            return View(queriedCompany);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeletePost(int? id)
+        {
+            Company? company = _unitOfWork.Company.Get(u => u.Id == id);
+
+            if (company == null)
+            {
+                return NotFound();
+            }
+
+            _unitOfWork.Company.Remove(company);
+            _unitOfWork.Save();
+            TempData["success"] = "Company deleted";
+            return RedirectToAction("Index");
+
         }
     }
 }
