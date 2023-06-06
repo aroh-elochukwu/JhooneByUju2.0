@@ -24,11 +24,6 @@ namespace JhooneByUju2._0.Areas.Admin.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult Create() 
-        {
-            return View();
-        }
-
         public IActionResult Upsert(int? id)
         {
 

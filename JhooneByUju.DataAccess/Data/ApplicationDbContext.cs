@@ -27,6 +27,12 @@ namespace JhooneByUju.DataAccess.Data
                 new Category { Id = 4, Name = "Arts", DisplayOrder = 0 }
                 );
 
+            modelBuilder.Entity<Company>().HasData(
+                new Company { Id = 1, Name = "JG ALSP", StreetAddress = "9 Igbudu Market", City = "Warri", PhoneNumber = "08022347998", State = "Delta State", PostalCode = "WE 332" },
+                 new Company { Id = 2, Name = "Market Square", StreetAddress = "300 Main Street", City = "Winnipeg", PhoneNumber = "4317839374", State = "Manitoba", PostalCode = "YSD 922" }
+
+                );
+
             modelBuilder.Entity<Product>().HasData(
                 new Product { Id = 1, Title = "Hand Bags 2", CategoryId = 1,ImageUrl = "",  StoreCode = 102, Designer = "Obianuju Igboayaka",Description= "Second Hand bag created by Igboayaka Uju", ListPrice= 14, Price = 13.2, Price15 = 11 },
                 new Product { Id = 2, Title = "Hand Bag  1", CategoryId = 1, ImageUrl = "", StoreCode = 101, Designer = "Obianuju Igboayaka", Description = "First Hand bag created by Igboayaka Uju", ListPrice = 35, Price = 32, Price15 = 27 },
