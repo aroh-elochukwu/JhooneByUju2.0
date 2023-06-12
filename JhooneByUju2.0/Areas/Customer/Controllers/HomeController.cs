@@ -1,7 +1,9 @@
 ﻿using JhooneByUju.DataAccess.Repository.IRepository;
 using JhooneByUju.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace JhooneByUju2._0.Areas.Customer.Controllers
 {
@@ -25,8 +27,44 @@ namespace JhooneByUju2._0.Areas.Customer.Controllers
 
         public IActionResult Details(int productId)
         {
-            Product product = _unitOfWork.Product.Get(u => u.Id == productId ,includeProperties: "Category");
-            return View(product);
+            ShoppingCart cart = new()
+            {
+                Product = _unitOfWork.Product.Get(u => u.Id == productId ,includeProperties: "Category"),
+                Count = 1,
+                ProductId = productId
+            };            
+            
+            return View(cart);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            shoppingCart.ApplicationUserId = userId;
+
+            ShoppingCart cartInDb = _unitOfWork.ShoppingCart.Get(u => u.ApplicationUserId == userId && u.ProductId == shoppingCart.ProductId);
+
+            if (cartInDb == null)
+            {
+                //add cart record
+                _unitOfWork.ShoppingCart.Add(shoppingCart);
+
+            }
+            else {
+                //product already exist in user cart
+                cartInDb.Count += shoppingCart.Count;
+                _unitOfWork.ShoppingCart.Update(cartInDb);
+
+            }
+
+            
+            _unitOfWork.Save();
+            
+
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()
