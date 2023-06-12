@@ -10,15 +10,18 @@ using System.Threading.Tasks;
 
 namespace JhooneByUju.DataAccess.Repository
 {
-    public class ApplicationUserRepository : Repository<ApplicationUser>,IApplicationUserRepository
+    public class CategoryRepository : Repository<Category>,ICategoryRepository
     {
         private ApplicationDbContext _db;
-        public ApplicationUserRepository(ApplicationDbContext db): base(db) 
+        public CategoryRepository(ApplicationDbContext db): base(db) 
         {
             _db = db;
             
         }        
 
-        
+        public void Update(Category category)
+        {
+           _db.Categories.Update(category);
+        }
     }
 }
