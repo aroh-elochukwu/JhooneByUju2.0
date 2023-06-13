@@ -60,7 +60,7 @@ namespace JhooneByUju2._0.Areas.Customer.Controllers
 
             }
 
-            
+            TempData["success"] = "Cart Updated successfully";
             _unitOfWork.Save();
             
 
