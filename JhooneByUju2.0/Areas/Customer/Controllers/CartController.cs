@@ -37,6 +37,41 @@ namespace JhooneByUju2._0.Areas.Customer.Controllers
             return View(ShoppingCartVM);
         }
 
+        public IActionResult Plus(int cartId)
+        {
+            var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId);
+            cartFromDb.Count ++;
+            _unitOfWork.ShoppingCart.Update(cartFromDb);
+            _unitOfWork.Save();
+            return RedirectToAction(nameof(Index)); 
+        }
+
+        public IActionResult Minus(int cartId)
+        {
+            var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId);
+            if (cartFromDb.Count <= 1)
+            {
+                //remove item from cart
+                _unitOfWork.ShoppingCart.Remove(cartFromDb);                
+            }
+            else {
+                // reduce number of item in cart
+                cartFromDb.Count --;
+                _unitOfWork.ShoppingCart.Update(cartFromDb);
+
+            }            
+            _unitOfWork.Save();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Remove(int cartId)
+        {
+            var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId);
+            _unitOfWork.ShoppingCart.Remove(cartFromDb);
+            _unitOfWork.Save();
+            return RedirectToAction(nameof(Index));
+        }
+
         private double GetPriceBasedOnQuantity (ShoppingCart shoppingCart)
         {
             if (shoppingCart.Count < 15)
