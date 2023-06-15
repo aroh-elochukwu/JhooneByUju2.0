@@ -34,10 +34,8 @@ namespace JhooneByUju.DataAccess.Repository
             if (tracked)
             {
                 query = dbSet;
-
             }
             else  {
-
                 query = dbSet.AsNoTracking();
             }
 
@@ -52,9 +50,14 @@ namespace JhooneByUju.DataAccess.Repository
             return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll(string? includeProperties = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter, string? includeProperties = null)
         {
-            IQueryable<T> query = dbSet.AsNoTracking();
+            IQueryable<T> query = dbSet;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            
             if (!string.IsNullOrEmpty(includeProperties))
             {
                 foreach (var includeProperty in includeProperties.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
