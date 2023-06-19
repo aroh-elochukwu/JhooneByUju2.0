@@ -16,7 +16,7 @@ namespace JhooneByUju.Models
         public int OrderHeaderId { get; set; }
         [ForeignKey("OrderHeaderId")]
         [ValidateNever] 
-        public string OrderHeader { get; set;}
+        public OrderHeader OrderHeader { get; set;}
         [Required]
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
