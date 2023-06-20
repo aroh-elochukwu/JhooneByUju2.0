@@ -4,6 +4,7 @@ using JhooneByUju.Models.ViewModels;
 using JhooneByUju.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Stripe.Checkout;
 using System.Security.Claims;
 
 namespace JhooneByUju2._0.Areas.Customer.Controllers
@@ -113,7 +114,7 @@ namespace JhooneByUju2._0.Areas.Customer.Controllers
                     Price = cart.Price,
                     Count = cart.Count,
                 };
-                _unitOfWork.OrderDetail.Add(orderDetail);
+                _unitOfWork.OrderDetail.Add(orderDetail); 
                 _unitOfWork.Save();
             }
 
@@ -121,6 +122,42 @@ namespace JhooneByUju2._0.Areas.Customer.Controllers
             {
                 // this is a regular customer account and we neeed to capture payment
                 //stripe logic
+                string domain = "http://localhost:5142/";
+                var options = new SessionCreateOptions
+                {
+                    SuccessUrl = domain+ $"Customer/Cart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
+                    CancelUrl = domain+ "Customer/Cart/Index",
+                    LineItems = new List<SessionLineItemOptions>(),
+                 
+                    Mode = "payment",
+                };
+
+                foreach(var item in ShoppingCartVM.ShoppingCartList)
+                {
+                    var sessionLineItem = new SessionLineItemOptions
+                    {
+                        PriceData = new SessionLineItemPriceDataOptions
+                        {
+                            UnitAmount = (long)(item.Price * 100), //e.g CA$20.32 => 2032
+                            Currency = "cad",
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = item.Product.Title
+                            },
+
+                        },
+                        Quantity =item.Count
+                    };
+                    options.LineItems.Add(sessionLineItem);
+                }
+
+                var service = new SessionService();
+                Session session = service.Create(options);
+                _unitOfWork.OrderHeader.UpdateStringPaymentId(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
+                _unitOfWork.Save();
+                Response.Headers.Add("Location", session.Url);
+
+                return new StatusCodeResult(303);
             }
 
                 return RedirectToAction(nameof(OrderConfirmation), new {id = ShoppingCartVM.OrderHeader.Id});
@@ -129,6 +166,27 @@ namespace JhooneByUju2._0.Areas.Customer.Controllers
 
         public IActionResult OrderConfirmation(int id)
         {
+            OrderHeader orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == id, includeProperties: "ApplicationUser");
+            if (orderHeader.PaymentStatus != SD.PaymentStatusDelayedPayment)
+            {
+                // this is an order by a basic customer 
+
+                var service = new SessionService();
+                Session session = service.Get(orderHeader.SessionId);
+
+                if (session.PaymentStatus.ToLower() == "paid")
+                {
+                    _unitOfWork.OrderHeader.UpdateStringPaymentId(id, session.Id, session.PaymentIntentId);
+                    _unitOfWork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
+                    _unitOfWork.Save();
+                }
+            }
+
+            List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
+
+            _unitOfWork.ShoppingCart.RemoveRange(shoppingCarts);
+            _unitOfWork.Save();
+
             return View(id);
         }
 
