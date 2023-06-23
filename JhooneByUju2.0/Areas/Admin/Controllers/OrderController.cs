@@ -1,5 +1,6 @@
 ﻿using JhooneByUju.DataAccess.Repository.IRepository;
 using JhooneByUju.Models;
+using JhooneByUju.Models.ViewModels;
 using JhooneByUju.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -9,7 +10,7 @@ using System.Diagnostics;
 namespace JhooneByUju2._0.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = SD.Role_Admin)]
+    
     public class OrderController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -20,6 +21,17 @@ namespace JhooneByUju2._0.Areas.Admin.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult Details(int orderId)
+        {
+            OrderVM orderVM = new()
+            {
+                OrderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == orderId, includeProperties: "ApplicationUser"),
+                OrderDetail = _unitOfWork.OrderDetail.GetAll(u => u.OrderHeaderId == orderId, includeProperties: "Product")
+
+            };
+            return View(orderVM);
         }
 
 
