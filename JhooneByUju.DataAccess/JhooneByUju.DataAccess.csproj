@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\JhooneByUju.Models\JhooneByUju.Models.csproj" />
+    <ProjectReference Include="..\JhooneByUju.Utility\JhooneByUju.Utility.csproj" />
   </ItemGroup>
 
 </Project>
